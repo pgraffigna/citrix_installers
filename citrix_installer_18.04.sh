@@ -1,5 +1,5 @@
 #!/bin/bash
-#script para instalar Citrix Workspace en Ubuntu 20.04
+#script para instalar Citrix Receiver en Ubuntu 18.04
 #https://www.comoinstalarlinux.com/citrix-ica-client-para-linux-ubuntu-y-linux-mint/
 
 #Colores
