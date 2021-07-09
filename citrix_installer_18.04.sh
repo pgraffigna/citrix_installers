@@ -8,10 +8,11 @@ redColour="\e[0;31m\033[1m"
 yellowColour="\e[0;33m\033[1m"
 endColour="\033[0m\e[0m"
 
+CITRIX_DEPS=(http://launchpadlibrarian.net/361669149/libicu60_60.2-3ubuntu3_amd64.deb http://launchpadlibrarian.net/344880889/libjavascriptcoregtk-1.0-0_2.4.11-3ubuntu3_amd64.deb http://launchpadlibrarian.net/344880892/libwebkitgtk-1.0-0_2.4.11-3ubuntu3_amd64.deb)
 CITRIX=icaclient_13.10.0.20_amd64.deb
 CERT="http://www2.mecon.gov.ar/camecon2/cacert.crt"
 
-trap "rm $CITRIX receiver-for-linux-latest.html" EXIT
+trap "rm *.deb receiver-for-linux-latest.html" EXIT
 
 trap ctrl_c INT
 function ctrl_c(){
@@ -19,12 +20,17 @@ function ctrl_c(){
         exit 0
 }
 
+function citrix_deps(){
+echo -e "${yellowColour}Instalando dependencias de citrix ${endColour}"
+sudo apt update; for i in "${CITRIX_DEPS[@]}"; do wget -q "$i";done \
+	&& sudo dpkg -i *.deb
+}
+
 function citrix_install(){
+echo -e "${yellowColour}Instalando apps necesarias ${endColour}"
+sudo apt install -y wget curl
 
-echo -e "${yellowColour}Instalando dependencias ${endColour}"
-sudo apt update && sudo apt install -y wget curl
-
-echo -e "${yellowColour}Descarga el instalador ${endColour}"
+echo -e "${yellowColour}Descargando el instalador ${endColour}"
 wget -q https://www.citrix.com/es-mx/downloads/citrix-receiver/linux/receiver-for-linux-latest.html
 
 local URL_CITRIX=$(grep -i '//downloads.citrix.com/14822/icaclient_13.10.0.20_amd64.deb?__gda__=' receiver-for-linux-latest.html | awk '{print $8}' | cut -d= -f3 | tr '"' " ")
@@ -36,7 +42,6 @@ sudo dpkg -i "$CITRIX"; sudo apt install -f -y
 }
 
 function cert_install(){
-
 echo -e "${yellowColour}Descargar el certificado ${endColour}"
 sudo wget -q "$CERT" -O /usr/share/ca-certificates/mozilla/cacert.crt
 
@@ -48,5 +53,6 @@ sudo ln -s /opt/Citrix/ICAClient/npica.so /usr/lib/firefox-addons/plugins/npica.
 echo -e "${greenColour}Todos los procesos terminaron correctamente!! ${endColour}"
 }
 
+citrix_deps
 citrix_install
 cert_install

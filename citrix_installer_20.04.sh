@@ -8,10 +8,10 @@ redColour="\e[0;31m\033[1m"
 yellowColour="\e[0;33m\033[1m"
 endColour="\033[0m\e[0m"
 
-CITRIX=icaclient_21.3.0.38_amd64.deb
+CITRIX=icaclient_21.6.0.28_amd64.deb
 CERT="http://www2.mecon.gov.ar/camecon2/cacert.crt"
 
-trap "rm $CITRIX workspace-app-for-linux-latest.html"
+trap "rm $CITRIX workspace-app-for-linux-latest.html" EXIT
 
 trap ctrl_c INT
 function ctrl_c(){
@@ -26,9 +26,9 @@ sudo apt update && sudo apt install -y wget curl
 echo -e "${yellowColour}Descarga el instalador ${endColour}"
 wget -q https://www.citrix.com/downloads/workspace-app/linux/workspace-app-for-linux-latest.html
 
-local URL_CITRIX=$(grep -i '//downloads.citrix.com/19171/icaclient_21.3.0.38_amd64.deb?__gda__=' workspace-app-for-linux-latest.html | awk '{print $8}' | cut -d= -f3 | tr '"' " ")
+local URL_CITRIX=$(grep -i '//downloads.citrix.com/19702/icaclient_21.6.0.28_amd64.deb?__gda__=' workspace-app-for-linux-latest.html | awk '{print $8}' | cut -d= -f3 | tr '"' " ")
 
-curl -H "User-Agent:'bot 1.0'" "https://downloads.citrix.com/19171/icaclient_21.3.0.38_amd64.deb?__gda__=${URL_CITRIX}" --output "$CITRIX"
+curl -H "User-Agent:'bot 1.0'" "https://downloads.citrix.com/19702/icaclient_21.6.0.28_amd64.deb?__gda__=${URL_CITRIX}" --output "$CITRIX"
 
 echo -e "${yellowColour}Instalando el paquete ${endColour}"
 sudo dpkg -i "$CITRIX"; sudo apt install -y -f
