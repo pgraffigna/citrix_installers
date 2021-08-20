@@ -23,7 +23,7 @@ function ctrl_c(){
 function citrix_deps(){
 echo -e "${yellowColour}Instalando dependencias de citrix ${endColour}"
 sudo apt-get update -qq; for i in "${CITRIX_DEPS[@]}"; do wget -q --show-progress --progress=bar:force 2>&1 "$i";done \
-	&& sudo dpkg -i *.deb
+	&& sudo dpkg -i *.deb &>/dev/null
 }
 
 function citrix_install(){
@@ -35,7 +35,7 @@ local URL_CITRIX=$(grep -i '//downloads.citrix.com/14822/icaclient_13.10.0.20_am
 wget -q --show-progress --progress=bar:force 2>&1 "https:$URL_CITRIX" -O "$CITRIX"  
 
 echo -e "${yellowColour}Instalando el paquete ${endColour}"
-sudo dpkg -i "$CITRIX"; sudo apt-get install -f -y -qq
+sudo dpkg -i "$CITRIX" &>/dev/null; sudo apt-get install -f -y &>/dev/null
 }
 
 function cert_install(){

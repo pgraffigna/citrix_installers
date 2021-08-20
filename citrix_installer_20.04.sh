@@ -20,23 +20,21 @@ function ctrl_c(){
 }
 
 function citrix_install(){
-echo -e "${yellowColour}Instalando dependencias ${endColour}"
-sudo apt update && sudo apt install -y wget curl
-
 echo -e "${yellowColour}Descarga el instalador ${endColour}"
-wget -q https://www.citrix.com/downloads/workspace-app/linux/workspace-app-for-linux-latest.html
+wget -q --show-progress --progress=bar:force 2>&1 https://www.citrix.com/downloads/workspace-app/linux/workspace-app-for-linux-latest.html
 
-local URL_CITRIX=$(grep -i '//downloads.citrix.com/19702/icaclient_21.6.0.28_amd64.deb?__gda__=' workspace-app-for-linux-latest.html | awk '{print $8}' | cut -d= -f3 | tr '"' " ")
+local URL_CITRIX=$(grep -i '//downloads.citrix.com/19702/icaclient_21.6.0.28_amd64.deb?__gda__=' workspace-app-for-linux-latest.html | awk '{print $8}' | cut -d'"' -f2)
 
-curl -H "User-Agent:'bot 1.0'" "https://downloads.citrix.com/19702/icaclient_21.6.0.28_amd64.deb?__gda__=${URL_CITRIX}" --output "$CITRIX"
+#curl -H "User-Agent:'bot 1.0'" "https://downloads.citrix.com/19702/icaclient_21.6.0.28_amd64.deb?__gda__=${URL_CITRIX}" --output "$CITRIX"
+wget -q --show-progress --progress=bar:force 2>&1 "https:$URL_CITRIX" -O "$CITRIX"
 
 echo -e "${yellowColour}Instalando el paquete ${endColour}"
-sudo dpkg -i "$CITRIX"; sudo apt install -y -f
+sudo dpkg -i "$CITRIX" &>/dev/null; sudo apt-get install -y -f &>/dev/null
 }
 
 function cert_install(){
 echo -e "${yellowColour}Descargar el certificado ${endColour}"
-sudo wget -q "$CERT" -O /usr/share/ca-certificates/mozilla/cacert.crt
+sudo wget -q --show-progress --progress=bar:force 2>&1 "$CERT" -O /usr/share/ca-certificates/mozilla/cacert.crt
 
 echo -e "${yellowColour}Link simbolico a certificados ${endColour}"
 sudo ln -s /usr/share/ca-certificates/mozilla/* /opt/Citrix/ICAClient/keystore/cacerts/
