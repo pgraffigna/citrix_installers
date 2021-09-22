@@ -1,13 +1,7 @@
 #!/bin/bash
 #script para instalar Citrix Receiver en macOS
 
-#Colores
-greenColour="\e[0;32m\033[1m"
-redColour="\e[0;31m\033[1m"
-yellowColour="\e[0;33m\033[1m"
-endColour="\033[0m\e[0m"
-
-URL="https://downloads.citrix.com/14596/CitrixReceiver.dmg?__gda__=exp=1632316414~acl=/*~hmac=b40654cba0a8d7acc93edff05af0ff47ec5d00d7d541cba97c5e59dca1d9bd6c"
+URL="https://downloads.citrix.com/14596/CitrixReceiver.dmg?__gda__=exp=1632328536~acl=/*~hmac=c75f6c63b516d2ae5b474180bcb5412e6eea91a46cf5c41b46dc0fbd1ea125a5"
 CITRIX=CitrixReceiver.dmg
 CERT="http://www2.mecon.gov.ar/camecon2/cacert.crt"
 CERT_NAME=cacert.crt
@@ -23,9 +17,7 @@ echo -e "${yellowColour}Descarga el instalador ${endColour}"
 curl -s $URL -o $CITRIX
 
 echo -e "${yellowColour}Instalando el paquete ${endColour}"
-hdiutil attach $CITRIX
-cp -R /Volumes/CitrixReceiver/CitrixReceiver.app /Applications
-hdiutil unmount /Volumes/CitrixReceiver
+hdiutil mount $CITRIX
 }
 
 function cert_install(){
