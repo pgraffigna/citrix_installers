@@ -43,13 +43,18 @@ echo -e "${yellowColour}Descargar el certificado ${endColour}"
 sudo wget -q --show-progress --progress=bar:force 2>&1 "$CERT" -O /usr/share/ca-certificates/mozilla/cacert.crt
 
 echo -e "${yellowColour}Link simbolico a certificados ${endColour}"
-sudo ln -s /usr/share/ca-certificates/mozilla/* /opt/Citrix/ICAClient/keystore/cacerts/
+sudo ln -s /usr/share/ca-certificates/mozilla/* /opt/Citrix/ICAClient/keystore/cacerts/ 2>&1
 sudo c_rehash /opt/Citrix/ICAClient/keystore/cacerts/ 2>/dev/null
-sudo ln -s /opt/Citrix/ICAClient/npica.so /usr/lib/firefox-addons/plugins/npica.so
+sudo ln -s /opt/Citrix/ICAClient/npica.so /usr/lib/firefox-addons/plugins/npica.so 2>&1
+}
 
-echo -e "${greenColour}Todos los procesos terminaron correctamente!! ${endColour}"
+function mapping(){
+sudo sed -i '/IgnoreErrors/a DrivePathH=$HOME\nDriveEnabledH=True\nDriveReadAccessH=0\nDriveWriteAccessH=0\n' /opt/Citrix/ICAClient/nls/es/wfclient.template
 }
 
 citrix_deps
 citrix_install
 cert_install
+mapping
+
+echo -e "${greenColour}Todos los procesos terminaron correctamente!! ${endColour}"

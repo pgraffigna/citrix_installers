@@ -8,3 +8,4 @@ scripts:
 - citrix_installer_18.04.sh
 - citrix_installer_20.04.sh
 - citrix_installer_win10.ps1
+- citrix_installer_macOS.sh
