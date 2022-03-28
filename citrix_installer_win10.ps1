@@ -2,9 +2,7 @@ $URL_CERT = "http://www2.mecon.gov.ar/camecon2/cacert.crt"
 $URL_BASE = "https://downloads.citrix.com/14726/CitrixReceiver.exe?__gda__=exp=1648481292~acl=/*~hmac="
 $ID = "3a43fe47e36e46412604f7f39877f4f61e34f0442dcc353f579911422af5f0dc"
 
-# tener en cuenta que hay que reemplazar el hash de la URL_CITRIX ya que cambia
-
-#Invoke-WebRequest -URI https://www.citrix.com/es-mx/downloads/citrix-receiver/windows/receiver-for-windows-latest.html -UseBasicParsing -OutFile "$HOME\Desktop\url"
+#tener en cuenta que hay que reemplazar el $ID cambia
 
 Write-Output ''
 Write-Host "[!!]1.Descarga el certificado + inicia el instalador" -ForegroundColor "yellow"
