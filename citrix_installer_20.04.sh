@@ -49,7 +49,10 @@ sudo ln -s /opt/Citrix/ICAClient/npica.so /usr/lib/firefox-addons/plugins/npica.
 }
 
 function mapping(){
+# global
 sudo sed -i '/IgnoreErrors/a DrivePathH=$HOME\nDriveEnabledH=True\nDriveReadAccessH=0\nDriveWriteAccessH=0\n' /opt/Citrix/ICAClient/nls/es/wfclient.template
+# por usuario
+# sudo sed -i '/IgnoreErrors/a DrivePathH=$HOME\nDriveEnabledH=True\nDriveReadAccessH=0\nDriveWriteAccessH=0\n' /home/usuario/.ICAClient/wfclient.ini
 }
 
 citrix_deps
